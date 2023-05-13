@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IRestaurentDao extends JpaRepository<Restaurent,Integer> {
+    public Restaurent findFirstByEmail(String email);
 }
