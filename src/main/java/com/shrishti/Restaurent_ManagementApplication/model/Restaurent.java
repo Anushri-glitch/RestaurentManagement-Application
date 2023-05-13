@@ -17,14 +17,16 @@ public class Restaurent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer restaurentId;
-    private String restaurentName;
+    private Integer restaurentNewId;
+    private String restaurentPublicName;
+    private String restaurentUserName;
     private String restaurentAdd;
-    private Integer restaurentPhone;
+    private String email;
+    private String restaurentPhone;
     private String restaurentSpeciality;
-    private Integer restaurentTotalstaff;
+    private Integer restaurentTotalStaff;
 
-    @ManyToMany
+    @OneToOne
     @JoinColumn(name = "food_name")
-    List<Food> foodList = new ArrayList<>();
+    List<Food> foodList ;
 }
