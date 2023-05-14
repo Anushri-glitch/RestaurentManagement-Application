@@ -55,7 +55,7 @@ public class RestaurentController {
 
     //Management Service - Open Admin Portal By Id and Password
     @GetMapping(value = "/managementData")
-    public Management findAdminByIdAndPassword(@RequestParam Integer hrId, @RequestParam String password){
-        return restaurentService.findAdminByIdAndPassword(hrId,password);
+    public Management findByIdAndPassword(@RequestParam Integer id, @RequestParam String password){
+        return restaurentService.findByIdAndPassword(id,password);
     }
 }

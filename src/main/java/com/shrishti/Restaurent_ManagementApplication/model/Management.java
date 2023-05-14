@@ -3,16 +3,13 @@ package com.shrishti.Restaurent_ManagementApplication.model;
 import com.shrishti.Restaurent_ManagementApplication.model.RestaurentData.R_Employee;
 import com.shrishti.Restaurent_ManagementApplication.model.RestaurentData.R_Reporting;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table
 @Entity
 public class Management {
 
@@ -23,10 +20,11 @@ public class Management {
     private String hrPassword;
 
     @OneToOne
+    @JoinColumn(name = "restaurent")
     private Restaurent restaurentName;
 
-    @OneToOne
-    private R_Employee employees;
+    @ManyToMany
+    private List<R_Employee> employees = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     private R_Reporting report;

@@ -28,7 +28,7 @@ public class RestaurentService {
 
 
     public String createRestaurent(RestroSignInput restaurents) {
-        Restaurent oldRestaurent = restaurentDao.findFirstByEmail(restaurents.getEmail());
+        Restaurent oldRestaurent = restaurentDao.findById(restaurents.getResId()).get();
 
         if(oldRestaurent == null){
             oldRestaurent.setRestaurentNewId(restaurents.getResId());
@@ -88,12 +88,17 @@ public class RestaurentService {
         return "HR Already Exists!!!";
     }
 
-
-    public Management findAdminByIdAndPassword(Integer hrId, String password) {
-        return managementDao.findByIdAndPassword(hrId,password);
-    }
-
     public List<Restaurent> getAllRestaurents() {
         return restaurentDao.findAll();
+    }
+
+    public Management findByIdAndPassword(Integer id, String password){
+        Management newManagement = managementDao.findById(id).get();
+        if(newManagement != null){
+            if(newManagement.getHrPassword().equals(password)){
+                return newManagement;
+            }
+        }
+        return null;
     }
 }

@@ -18,6 +18,7 @@ public class Food {
     private Double price;
 
     @ManyToOne
+    @JoinColumn(name = "restaurentId")
     private Restaurent restaurent;
 }
 

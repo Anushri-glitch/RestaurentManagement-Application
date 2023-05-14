@@ -26,7 +26,7 @@ public class Restaurent {
     private String restaurentSpeciality;
     private Integer restaurentTotalStaff;
 
-    @OneToOne
-    @JoinColumn(name = "food_name")
-    List<Food> foodList ;
+    @ManyToMany
+    @JoinColumn(name = "menu")
+    private List<Food> menu = new ArrayList<>();
 }
