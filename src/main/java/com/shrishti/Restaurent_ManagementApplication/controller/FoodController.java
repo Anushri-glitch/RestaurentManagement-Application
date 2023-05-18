@@ -13,7 +13,7 @@ public class FoodController {
 
     //Save Food List
     @PostMapping(value = "/food")
-    public String saveFood(@RequestBody List<Food> foods){
+    public String saveFood(@RequestBody Food foods){
         return foodService.saveFood(foods);
     }
 

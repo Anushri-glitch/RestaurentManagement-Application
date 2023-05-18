@@ -12,9 +12,9 @@ public class FoodService {
     @Autowired
     IFoodDao foodDao;
 
-    public String saveFood(List<Food> foods) {
-        foodDao.saveAll(foods);
-        return "FoodList is Saved!!!";
+    public String saveFood(Food foods) {
+        foodDao.save(foods);
+        return foods.toString();
     }
 
     public String updateFood(Food food, Integer foodId) {

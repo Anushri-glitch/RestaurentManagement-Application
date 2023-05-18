@@ -1,24 +1,20 @@
 package com.shrishti.Restaurent_ManagementApplication.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table
 @Entity
 public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer foodId;
+
+    @Pattern(regexp = "^[a-z0-9]{3,}@[admin]{3,5}[.]{1}[com]{1,3}$", message = "Please Make Sure That You are admin user!!!")
+    private String email;
+
     private String foodName;
     private Double price;
-
-    @ManyToOne
-    @JoinColumn(name = "restaurentId")
-    private Restaurent restaurent;
 }
 

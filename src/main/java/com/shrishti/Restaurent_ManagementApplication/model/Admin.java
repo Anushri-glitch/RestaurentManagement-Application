@@ -4,44 +4,46 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table
-public class User {
+public class Admin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
+    private Integer adminUserId;
 
     @Pattern(regexp = "^[A-Za-z]\\\\w{5,29}$")
     @NotEmpty(message = "UserName is Empty!!!")
-    private String userName;
+    private String adminUserName;
 
     @NotEmpty(message = "password is Empty!!!")
-    private String userPassword;
+    private String adminPassword;
 
-    @Pattern(regexp = "^[a-zA-Z0-9_+&*-] + (?:\\\\.[a-zA-Z0-9_+&*-]\n" +
-            "+ )*@(?:[a-zA-Z0-9-]+\\\\.) + [a-zA-Z]{2,7}$ ")
+    @Pattern(regexp = "^[a-z0-9]{3,}@[admin]{3,5}[.]{1}[com]{1,3}$")
     @NotEmpty(message = "Email is Empty!!!")
-    private String userEmail;
+    private String adminEmail;
 
     @Pattern(regexp = "^(\\\\+\\\\d{1,3}( )?)?((\\\\(\\\\d{1,3}\\\\))|\\\\d{1,3})[- .]?\\\\d{3,4}[- .]?\\\\d{4}$")
     @NotEmpty(message = "Phone Number is Empty!!!")
-    private String userPhone;
+    private String adminPhone;
 
     @ManyToMany
     @JoinColumn(name = "menu")
     private List<Food> foodList = new ArrayList<>();
 
-    public User(Integer userId, String userName, String userPassword, String userEmail, String userPhone) {
-        this.userId = userId;
-        this.userName = userName;
-        this.userPassword = userPassword;
-        this.userEmail = userEmail;
-        this.userPhone = userPhone;
+    public Admin(Integer adminUserId, String adminUserName, String adminPassword, String adminEmail, String adminPhone) {
+        this.adminUserId = adminUserId;
+        this.adminUserName = adminUserName;
+        this.adminPassword = adminPassword;
+        this.adminEmail = adminEmail;
+        this.adminPhone = adminPhone;
     }
 }
+
