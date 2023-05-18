@@ -8,6 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface IUserDao extends JpaRepository<User,Integer> {
 
     User findFirstByUserEmail(String userEmail);
-
-    User existsByUserEmail(String userEmail);
 }

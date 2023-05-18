@@ -2,6 +2,7 @@ package com.shrishti.Restaurent_ManagementApplication.service;
 
 import com.shrishti.Restaurent_ManagementApplication.dto.SignInInputA;
 import com.shrishti.Restaurent_ManagementApplication.dto.SignInInputN;
+import com.shrishti.Restaurent_ManagementApplication.dto.SignUpN;
 import com.shrishti.Restaurent_ManagementApplication.dto.SignUpOutput;
 import com.shrishti.Restaurent_ManagementApplication.model.Admin;
 import com.shrishti.Restaurent_ManagementApplication.model.AuthTokenAdmin;
@@ -9,6 +10,7 @@ import com.shrishti.Restaurent_ManagementApplication.model.AuthTokenNormal;
 import com.shrishti.Restaurent_ManagementApplication.model.User;
 import com.shrishti.Restaurent_ManagementApplication.repository.IAdminDao;
 import com.shrishti.Restaurent_ManagementApplication.repository.IUserDao;
+import jakarta.transaction.Transactional;
 import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,28 +35,30 @@ public class UserService {
 
 
     //SignUp For Normal User
-    public SignUpOutput saveNormalUser(User user) {
+    @Transactional
+    public SignUpOutput saveNormalUser(SignUpN signUpDto) {
 
-        User nUser = userDao.existsByUserEmail(user.getUserEmail());
+        //Check that this user is exists or not
+        User nUser = userDao.findFirstByUserEmail(signUpDto.getUserEmail());
 
         if(nUser != null){
             throw new IllegalStateException("User Already Exists!!...Please Make New registration!!!");
         }
 
         //Encryption
-        String encryptedPassword = null;
+        String encryptedPassword;
         try {
-            encryptedPassword = encryptPassword(nUser.getUserPassword());
+            encryptedPassword = encryptPassword(signUpDto.getUserPassword());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
 
         //Save Normal user
-        nUser = new User(user.getUserId(), user.getUserName(), user.getUserEmail(), encryptedPassword, user.getUserPhone());
+        nUser = new User(signUpDto.getUserName(), signUpDto.getUserEmail(), encryptedPassword, signUpDto.getUserContact());
         userDao.save(nUser);
 
         //token creation and saving
-        AuthTokenNormal token = new AuthTokenNormal(user);
+        AuthTokenNormal token = new AuthTokenNormal(nUser);
         authServiceNormal.saveToken(token);
 
         return new SignUpOutput("Normal User Registered!!!", "User Created Successfully!!!");
@@ -74,7 +78,7 @@ public class UserService {
 
     //SignUp For Admin user
     public SignUpOutput saveAdminUser(Admin user) {
-        Admin aUser = adminDao.existsByAdminEmail(user.getAdminEmail());
+        Admin aUser = adminDao.findFirstByAdminEmail(user.getAdminEmail());
 
         if(aUser != null){
             throw new IllegalStateException("Admin User Already Exists!!...Please Make New registration!!!");
@@ -83,13 +87,13 @@ public class UserService {
         //Encryption
         String encryptedPassword = null;
         try {
-            encryptedPassword = encryptPassword(aUser.getAdminPassword());
+            encryptedPassword = encryptPassword(user.getAdminPassword());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
 
         //Save Normal user
-        aUser = new Admin(user.getAdminUserId(), user.getAdminUserName(), user.getAdminEmail(), encryptedPassword, user.getAdminPhone());
+        aUser = new Admin(user.getAdminUserName(), user.getAdminEmail(), encryptedPassword, user.getAdminPhone());
         adminDao.save(aUser);
 
         //token creation and saving

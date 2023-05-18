@@ -3,6 +3,7 @@ package com.shrishti.Restaurent_ManagementApplication.service;
 import com.shrishti.Restaurent_ManagementApplication.model.AuthTokenNormal;
 import com.shrishti.Restaurent_ManagementApplication.model.User;
 import com.shrishti.Restaurent_ManagementApplication.repository.INormalTokenDao;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class AuthServiceNormal {
     }
 
 
+    @Transactional
     public AuthTokenNormal getToken(User newUser) {
         return normalTokenDao.findFirstByUser(newUser);
     }

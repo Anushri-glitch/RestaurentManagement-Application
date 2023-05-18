@@ -34,12 +34,11 @@ public class Admin {
     @NotEmpty(message = "Phone Number is Empty!!!")
     private String adminPhone;
 
-    @ManyToMany
-    @JoinColumn(name = "menu")
-    private List<Food> foodList = new ArrayList<>();
+//    @ManyToMany
+//    @JoinColumn(name = "menu")
+//    private List<Food> foodList = new ArrayList<>();
 
-    public Admin(Integer adminUserId, String adminUserName, String adminPassword, String adminEmail, String adminPhone) {
-        this.adminUserId = adminUserId;
+    public Admin(String adminUserName, String adminPassword, String adminEmail, String adminPhone) {
         this.adminUserName = adminUserName;
         this.adminPassword = adminPassword;
         this.adminEmail = adminEmail;

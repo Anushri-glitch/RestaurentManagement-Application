@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAdminDao extends JpaRepository<Admin, Integer> {
-    Admin existsByAdminEmail(String user);
 
     Admin findFirstByAdminEmail(String adminUserEmail);
 }

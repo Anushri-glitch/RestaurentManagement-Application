@@ -1,6 +1,7 @@
 package com.shrishti.Restaurent_ManagementApplication.controller;
 import com.shrishti.Restaurent_ManagementApplication.dto.SignInInputA;
 import com.shrishti.Restaurent_ManagementApplication.dto.SignInInputN;
+import com.shrishti.Restaurent_ManagementApplication.dto.SignUpN;
 import com.shrishti.Restaurent_ManagementApplication.dto.SignUpOutput;
 import com.shrishti.Restaurent_ManagementApplication.model.Admin;
 import com.shrishti.Restaurent_ManagementApplication.model.User;
@@ -19,7 +20,7 @@ public class UserController {
 
     //Create User
     @PostMapping(value = "/normalUserSignUp")
-    public SignUpOutput saveUser(@Valid @RequestBody User user){
+    public SignUpOutput saveUser(@Valid @RequestBody SignUpN user){
         return userService.saveNormalUser(user);
     }
 
